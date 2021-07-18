@@ -104,7 +104,7 @@ jobs:
           GITHUB_REPOSITORY: $GITHUB_REPOSITORY
           
       - name: Copy The PR's Branch Repository Contents
-        uses: actions/checkout@master
+        uses: actions/checkout@main
         if: steps.get_status.outputs.status == 'private'
         with:
           ref: ${{ steps.chatops.outputs.SHA }}
@@ -120,15 +120,15 @@ jobs:
           
       - name: Jekyll build with baseurl as root for netifly
         if: steps.get_status.outputs.status == 'private'
-        uses: docker://hamelsmu/fastpages-jekyll
+        uses: docker://fastai/fastpages-jekyll
         with:
-          args: bash -c "gem install bundler && jekyll build"
+          args: bash -c "jekyll build"
      
       - name: deploy to netlify
         if: steps.get_status.outputs.status == 'private'
         id: py
         run: | 
-          sudo npm install netlify-cli -g
+          sudo npm install -g --unsafe-perm=true netlify-cli
           netlify deploy --dir _site | tee _netlify_logs.txt
           cat _netlify_logs.txt | python _action_files/parse_netlify.py
 

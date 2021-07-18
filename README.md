@@ -13,7 +13,7 @@
 
 ![](images/diagram.png)
 
-`fastpages` uses [GitHub Actions](https://github.com/features/actions) to simplify the process of of creating [Jekyll blog posts](https://jekyllrb.com/) on [GitHub Pages](https://pages.github.com/) from a variety of input formats.
+`fastpages` uses [GitHub Actions](https://github.com/features/actions) to simplify the process of creating [Jekyll blog posts](https://jekyllrb.com/) on [GitHub Pages](https://pages.github.com/) from a variety of input formats.
 
 ### `fastpages` provides the following features:
 
@@ -42,44 +42,55 @@ See below for a more detailed list of features.
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Welcome To `fastpages`](#welcome-to-fastpages)
-	- [Setup Instructions](#setup-instructions)
-	- [Customizing Blog Posts With Front Matter](#customizing-blog-posts-with-front-matter)
-		- [Configure Title & Summary](#configure-title--summary)
-		- [Table of Contents](#table-of-contents)
-		- [Colab, Binder And GitHub Badges](#colab-binder-and-github-badges)
-		- [Tags](#categories)
-		- [Enabling Comments](#enabling-comments)
-		- [Setting an Image For Social Media](#setting-an-image-for-social-media)
-      - [Hiding A Blog Post](#hiding-a-blog-post)
-      - [Toggle Search Visibility](#toggle-search-visibility)
+    - [`fastpages` provides the following features:](#fastpages-provides-the-following-features)
+  - [Setup Instructions](#setup-instructions)
+  - [Customizing Blog Posts With Front Matter](#customizing-blog-posts-with-front-matter)
+    - [Configure Title & Summary](#configure-title--summary)
+    - [Table of Contents](#table-of-contents)
+    - [Colab, Binder and GitHub Badges](#colab-binder-and-github-badges)
+    - [Categories](#categories)
+    - [Enabling Comments](#enabling-comments)
+    - [Setting an Image For Social Media](#setting-an-image-for-social-media)
+    - [Hiding A Blog Post](#hiding-a-blog-post)
+    - [Pinning A Blog Post](#pinning-a-blog-post)
+    - [Toggle Search Visibility](#toggle-search-visibility)
   - [Site Wide Configuration Options](#site-wide-configuration-options)
+  - [Adjusting Page Width](#adjusting-page-width)
+  - [Annotations and Highlighting With hypothes.is](#annotations-and-highlighting-with-hypothes.is)
+  - [Subscribing with RSS](#subscribing-with-rss)
   - [Syntax Highlighting](#syntax-highlighting)
+  - [Dark Mode](#dark-mode)
+  - [Adding Citations via BibTeX](#adding-citations-via-bibtex)
   - [Writing Blog Posts With Jupyter](#writing-blog-posts-with-jupyter)
-	  - [Hide Input/Output Cells](#hide-inputoutput-cells)
-	  - [Collapsable Code Cells](#collapsable-code-cells)
-	  - [Embedded Twitter and YouTube Content](#embedded-twitter-and-youtube-content)
-	  - [Automatically Convert Notebooks To Blog Posts](#automatically-convert-notebooks-to-blog-posts)
+    - [Hide Input/Output Cells](#hide-inputoutput-cells)
+    - [Collapsable Code Cells](#collapsable-code-cells)
+    - [Embedded Twitter and YouTube Content](#embedded-twitter-and-youtube-content)
+    - [Adding Footnotes](#adding-footnotes)
+    - [Automatically Convert Notebooks To Blog Posts](#automatically-convert-notebooks-to-blog-posts)
   - [Writing Blog Posts With Markdown](#writing-blog-posts-with-markdown)
   - [Writing Blog Posts With Microsoft Word](#writing-blog-posts-with-microsoft-word)
+    - [Specifying front-matter for Word documents](#specifying-front-matter-for-word-documents)
 - [Running the blog on your local machine](#running-the-blog-on-your-local-machine)
-- [Using The GitHub Action & Your Own Custom Blog](#using-the-github-action-your-own-custom-blog)
-	- [Optional Inputs](#optional-inputs)
+- [Using The GitHub Action & Your Own Custom Blog](#using-the-github-action--your-own-custom-blog)
+    - [Optional Inputs](#optional-inputs)
 - [Contributing To Fastpages](#contributing-to-fastpages)
 - [Upgrading Fastpages](#upgrading-fastpages)
-- [Customizing Fastpages](#customizing-fastpages)
 - [FAQ](#faq)
+- [Customizing Fastpages](#customizing-fastpages)
+- [Troubleshooting fastpages](#troubleshooting-fastpages)
 
 <!-- /TOC -->
 
 
 ## Setup Instructions
 
-1.  Generate a copy of this repo by clicking [on this link](https://github.com/fastai/fastpages/generate).  Name your repo anything you like **except** {your-username}.github.io.
+1.  Generate a copy of this repo by clicking [on this link](https://github.com/fastai/fastpages/generate). Make sure to sign in to your account, or you will see a 404 error. Name your repo anything you like **except** {your-username}.github.io.
 
 2. **GitHub Actions will automatically open a PR** on your new repository ~ 30 seconds after the copy is created.  Follow the instructions in that PR to continue.
 
-For a live walk-through of the setup steps (with some additional tips) see this [video tutorial of setting up a fastpages blog](https://youtu.be/L0boq3zqazI) by Abdul Majed.
+>If you are not seeing a PR, please make sure you have third party actions enabled in your organization: **Settings -> Actions -> Actions Permissions -> Enable local and third party Actions for this repository**
 
+For a live walk-through of the setup steps (with some additional tips) see this [video tutorial of setting up a fastpages blog](https://youtu.be/L0boq3zqazI) by Abdul Majed.
 
 ## Customizing Blog Posts With Front Matter
 
@@ -90,6 +101,7 @@ In a notebook, front matter is defined as a markdown cell at the beginning of th
   ```markdown
   # "Title"
   > "Awesome summary"
+
   - toc: false
   - branch: master
   - badges: true
@@ -107,7 +119,8 @@ Similarly, in a markdown document the same front matter would be defined like th
   ```yaml
   ---
   title: "My Title"
-  summary: "Awesome summary"
+  description: "Awesome description"
+  layout: post
   toc: false
   comments: true
   image: images/some_folder/your_image.png
@@ -139,7 +152,7 @@ See this [tutorial on YAML](https://rollout.io/blog/yaml-tutorial-everything-you
 
 This option works for **notebooks only**
 
-  -  The `branch` field is used to optionally render a link your notebook to Colab and GitHub in your blog post post. It'll default to `master` if you don't specify it in the notebook.
+  -  The `branch` field is used to optionally render a link your notebook to Colab and GitHub in your blog post. It'll default to `master` if you don't specify it in the notebook.
   - If you do not want to show Colab / GitHub badges on your blog post (perhaps because your repo is private and the links would be broken) set `badges` to `false`.  This defaults to `true`
   - By default, when you omit this parameter from your front matter, or you set `badges: true`, **all three badges (GitHub, Binder, Colab)** will appear by default. You can adjust these defaults in with the `default_badges` parameter in [Site Wide Configuration Options](#site-wide-configuration-options).
     - If only want to hide a badge on an individual post, you can set the front matter `hide_{github,colab,binder}_badge: true`.  For example, if you wanted to hide the Binder badge for an individual notebook but you want the other badges to show up, you can set this in your front matter:
@@ -154,7 +167,7 @@ This option works for **notebooks only**
   - You can have a comma seperated list inside square brackets of categories for a blog post, which will make the post visible on the tags page of your blog's site.  For example:
 
     In a notebook:
-    
+
     ```
     # "My Title"
     - categories: [fastpages, jupyter]
@@ -181,7 +194,7 @@ show_tags: true
 
 ### Enabling Comments
 
-Blog posting is powered by [Utterances](https://github.com/utterance/utterances), an open-source and ad-free way of implementing comments.  All comments are stored in issues on your blog's GitHub repo.  You can turn this on setting `comments` to  `true`.  This defaults to `false`.
+Commenting on blog posts is powered by [Utterances](https://github.com/utterance/utterances), an open-source and ad-free way of implementing comments.  All comments are stored in issues on your blog's GitHub repo.  You can turn this on setting `comments` to  `true`.  This defaults to `false`.
 
 To enable comments with [Utterances](https://github.com/utterance/utterances) you will need to do the following:
 
@@ -203,6 +216,52 @@ You may want to prevent a blog post from being listed on the home page, but stil
 
 It is recommended that you use [permalinks](https://jekyllrb.com/docs/permalinks/) in order to generate a predictable url for hidden blog posts.  You can also set the front matter `search_exclude` to `false` if you don't want users to find your hidden post in a search.
 
+### Pinning A Blog Post
+
+By default, posts are sorted by date on your homepage. However, you may want one or more blog posts to always appear at the very top of your homepage.  In other words, you may want certain posts to be "pinned" or "sticky".  To accomplish this, specify the `sticky_rank` front matter in the order you would like your sticky posts to appear.  Blog posts that do not set this parameter are sorted in the default way by date after the sticky posts.
+
+For example, consider these three markdown posts (also works for notebooks).
+
+`2020-01-01-Post-One.md`
+```yaml
+---
+title: Post One
+sticky_rank: 1
+---
+```
+
+`2020-02-01-Post-Two.md`
+```yaml
+---
+title: Post Two
+sticky_rank: 2
+---
+```
+
+`2020-04-01-Post-Three.md`
+```yaml
+---
+title: Post Three
+---
+```
+
+However, since `sticky_rank` is specified, blog posts will **first be sorted by sticky_rank in ascending order, then by date in descending order**, so the order of these posts will appear like so:
+
+- Post One
+- Post Two
+- Post Three
+
+_Without `sticky_rank` the above posts would actually be sorted in reverse order due to the dates associated with each post._
+
+_Note: pinning also works for notebooks:_
+
+```
+# "My cool blog post"
+> "Description of blog post"
+
+- sticky_rank: 2
+```
+
 ### Toggle Search Visibility
 
 fastpages comes with built in keyword search powered by [lunr.js](https://lunrjs.com/).  You can prevent a blog post or page from appearing in search results by setting the front matter `search_exclude` to `false`.  This is set to `true` by default.
@@ -222,7 +281,7 @@ fastpages comes with built in keyword search powered by [lunr.js](https://lunrjs
 - `twitter_username`: creates a link in your footer to your twitter page.
 - `use_math`: Set this to `true` to get LaTeX math equation support.  This is off by default as it otherwhise loads javascript into each page that may not be used.
 - `show_description`: This shows a description under the title of your blog posts on your homepage that contains a list of your blog posts.  Set to `true` by default.
-- `google_analytics`: Optionally use a [Google Analytics](http://www.google.com/analytics/) ID for tracking if desired. 
+- `google_analytics`: Optionally use a [Google Analytics](http://www.google.com/analytics/) ID for tracking if desired.
 - `show_image`: If set to true, this uses the `image` parameter in the front matter of your blog posts to render a preview of your blogs as shown below.  This is set to `false` by default.
   When show_image is set to `true` your homepage will look like this:
 
@@ -238,7 +297,7 @@ fastpages comes with built in keyword search powered by [lunr.js](https://lunrjs
 
   Note: if you are using an older version of fastpages, **you cannot use the automated upgrade process** to get pagination.  Instead you must follow these steps:
 
-    1. Rename your index.md file to index.html 
+    1. Rename your index.md file to index.html
          > mv index.md index.html
     2. Replace the `Gemfile` and `Gemfile.lock` in the root of your repo with the files in this repo.
     3. Edit your `_config.yml` as follows (look at [_config.yml](_config.yml) for an example):
@@ -261,6 +320,47 @@ fastpages comes with built in keyword search powered by [lunr.js](https://lunrjs
     colab: true
   ```
 
+- `html_escape`: this allows you to toggle escaping of HTML in various components of blog posts on or off.  At this moment, you can only toggle this for the `description` field in your posts.  
+This is set to `false` by default.
+
+## Adjusting Page Width
+
+You can adjust the page width of fastpages on various devices by editing [/_sass/minima/custom-variables.scss](_sass/minima/custom-variables.scss).
+
+These are the default values, which can be adjusted to suit your preferences:
+
+```scss
+// width of the content area
+// can be set as "px" or "%"
+$content-width:    1000px;
+$on-palm:          800px;
+$on-laptop:        1000px;
+$on-medium:        1000px;
+$on-large:         1200px;
+```
+
+## Annotations and Highlighting With hypothes.is
+
+[hypothes.is](https://web.hypothes.is/) is an open platform that provides a way to annotate and higlight pages, which can be either public or private.  When this feature is enabled, readers of your blog will be presented with the following tooltip when highlighting text:
+
+![annotation](_fastpages_docs/annotate.png)
+
+**This is disabled by default in fastpages.** You can enable or disable this in your [_config.yml](_config.yml) file by setting `annotations` to `true` or `false`:
+
+```yaml
+# Set this to true to turn on annotations with hypothes.is
+annotations: false
+```
+
+> You can customize hypothes.is by reading [these configuration options](http://h.readthedocs.io/projects/client/en/latest/publishers/config/).  It is also a good idea to read [these docs](https://web.hypothes.is/for-publishers/#embedding) if you want to do more with hypothes.is.  However, before trying to customize this feature you should read the [customizing fastpages](#customizing-fastpages) section for important caveats.
+
+## Subscribing with RSS
+
+You can direct your readers to subscribe with [RSS feeds](https://en.wikipedia.org/wiki/RSS).  There are many RSS subscription services available on the internet.  Some examples include:
+
+1. [Feedrabbit](https://feedrabbit.com/)
+2. [Blogtrottr](https://blogtrottr.com/)
+
 ## Syntax Highlighting
 
 `fastpages` overrides the default syntax highlighting of minima with the [Dracula theme](https://draculatheme.com/).  
@@ -276,15 +376,23 @@ fastpages comes with built in keyword search powered by [lunr.js](https://lunrjs
   If you wish to revert to the light theme above, you can remove the below line in [_sass/minima/custom-styles.scss](_sass/minima/custom-styles.scss)
 
   ```scss
-  @import "minima/fastpages-dracula-highlight"; 
+  @import "minima/fastpages-dracula-highlight";
   ```
 - If you don't like either of these themes, you can add your own CSS in [`_sass/minima/custom-styles.scss`](_sass/minima/custom-styles.scss).  See [customizing fastpages](#customizing-fastpages) for more details.
+
+## Dark Mode
+
+[This blog post](https://prudhvirampey.com/blog/colours/jekyll/css/fastpages/2020/10/30/hello-dark-mode.html) describes how to enable Dark Mode for fastpages.
+
+## Adding Citations via BibTeX
+
+Users who prefer to use the citation system BibTeX may do so; it requires enabling the [jekyll-scholar](https://github.com/inukshuk/jekyll-scholar) plugin. Please see [Citations in Fastpages via BibTeX and jekyll-scholar](https://drscotthawley.github.io/devblog4/2020/07/01/Citations-Via-Bibtex.html) for instructions on implementing this.
 
 ## Writing Blog Posts With Jupyter
 
 ### Hide Input/Output Cells
 
-Place the comment `#hide` at the beginning of a code cell and it wil **hide both the input and the output** of that cell. 
+Place the comment `#hide` at the beginning of a code cell and it wil **hide both the input and the output** of that cell.
 
 A `#hide_input` comment at the top of any cell will **only hide the input**.
 
@@ -292,10 +400,11 @@ Furthermore, the `hide input` [Jupyter Extension](https://jupyter-contrib-nbexte
 
 ### Collapsable Code Cells
 
-You may want to have code code be hidden from view under a collapsed element that the user can expand, rather than completely hiding the code from the reader.  
+You may want some code to be hidden in a collapsed element that the user can expand, rather than completely hiding the code from the reader.
 
 - To include code in a collapsable cell that **is collapsed by default**, place the comment `#collapse` at the top of the code cell.
 - To include code in a collapsable cell that **is open by default**, place the comment `#collapse_show` or `#collapse-show` at the top of the code cell.
+- To include the output under a collapsable element that is closed by default, place the comment `#collapse_output` or `#collapse-output` at the top of the code cell.
 
 ### Embedded Twitter and YouTube Content
 In a markdown cell in your notebook, use the following markdown shortcuts to embed Twitter cards and YouTube Videos.
@@ -305,6 +414,9 @@ In a markdown cell in your notebook, use the following markdown shortcuts to emb
   > youtube: https://youtu.be/your-link
   > twitter: https://twitter.com/some-link
   ```
+### Adding Footnotes
+
+Adding footnotes in notebooks is a bit different than markdown.  Please see the [Detailed Guide To Footnotes in Notebooks](https://github.com/fastai/fastpages/blob/master/_fastpages_docs/NOTEBOOK_FOOTNOTES.md).
 
 ### Automatically Convert Notebooks To Blog Posts
 
@@ -333,6 +445,16 @@ If you are writing your blog post in markdown, save your `.md` file into the `/_
 ## Writing Blog Posts With Microsoft Word
 
 Save your Microsoft Word documents into the `/_word` folder with the same naming convention (`YYYY-MM-DD-*.docx`) specified for notebooks.
+
+_Note:_ [alt text](https://support.office.com/en-us/article/add-alternative-text-to-a-shape-picture-chart-smartart-graphic-or-other-object-44989b2a-903c-4d9a-b742-6a75b451c669) in Word documents are not yet supported by fastpages, and will break links to images.
+
+### Specifying front-matter for Word documents
+
+`fastpages` does not have a robust way to specify [front matter](https://jekyllrb.com/docs/front-matter/) for Word documents.  At the moment, you can only specify front matter globally for all Word documents by editing [_action_files/word_front_matter.txt](_action_files/word_front_matter.txt).  
+
+To specify unique front matter per Word document, you will need to convert Word to markdown files manually. You can follow the steps in this [blog post](https://www.fast.ai/2020/01/18/gitblog/), which walk you through how to use [pandoc](https://pandoc.org/installing.html) to do the conversion.  Note: If you wish to customize your Word generated blog post in markdown, make sure you delete your Word document from the _word directory so your markdown file doesn’t get overwritten!  
+
+_If your primary method of writing blog posts is Word documents, and you plan on always manually editing markdown files converted from Word, you are probably better off using [fast_template](https://github.com/fastai/fast_template) instead of fastpages._
 
 # Running the blog on your local machine
 
@@ -422,7 +544,10 @@ Please see the [upgrading guide](_fastpages_docs/UPGRADE.md).
 
 # Customizing Fastpages
 
-fastpages builds upon the [minima theme](https://github.com/jekyll/minima).  If you want to customize the styling or layout of fastpages, you can find instructions [in minima's README](https://github.com/jekyll/minima/blob/master/README.md).  It is a good idea to read the full contents of the README to understand the directory structure.  Furthermore, it is a good idea to have a basic understanding of Jekyll before customizing your theme.  For those new to Jekyll, [the official docs](https://jekyllrb.com/docs/) are a good place to start.  Concretely, you can override css in fastpages in `_sass/minima/custom-styles.scss`.
+fastpages builds upon the [minima theme](https://github.com/jekyll/minima).  If you want to customize the styling or layout of fastpages, you can find instructions [in minima's README](https://github.com/jekyll/minima/blob/master/README.md).  It is a good idea to read the full contents of the README to understand the directory structure.  Furthermore, it is a good idea to have a basic understanding of Jekyll before customizing your theme.  For those new to Jekyll, [the official docs](https://jekyllrb.com/docs/) are a good place to start.  Concretely, you can override css in fastpages in `_sass/minima/custom-styles.scss`. *NOTE that minima's "skins" feature is currently incompatible with fastpages' css settings.*
 
 **If you choose to make customizations to fastpages**  It is possible that customizations you make could collide with current or future versions of fastpages and we recommend doing so only if you feel sufficiently comfortable with HTML and CSS.
 
+# Troubleshooting fastpages
+
+Please see the [troubleshooting guide](https://github.com/fastai/fastpages/blob/master/_fastpages_docs/TROUBLESHOOTING.md).

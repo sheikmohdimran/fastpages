@@ -14,17 +14,20 @@ jobs:
         if: github.repository == 'fastai/fastpages'
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@master
+            - uses: actions/checkout@main
             
+            - name: setup directories for Jekyll build
+              run: sudo chmod -R 777 .
+              
             - name: build container
               run: |
-                docker build -t hamelsmu/fastpages-jekyll -f _action_files/fastpages-jekyll.Dockerfile .
+                docker build -t fastai/fastpages-jekyll -f _action_files/fastpages-jekyll.Dockerfile .
 
             - name: push container
               if: github.event == 'push'
               run: |
                 echo ${PASSWORD} | docker login -u $USERNAME --password-stdin
-                docker push hamelsmu/fastpages-jekyll
+                docker push fastai/fastpages-jekyll
               env:
                 USERNAME: ${{ secrets.DOCKER_USERNAME }}
                 PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
